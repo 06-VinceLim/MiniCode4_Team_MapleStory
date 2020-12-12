@@ -21,8 +21,8 @@ public class QuestionMark_Controller : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("GameOver");
-            SceneManager.LoadScene("GameOverScene");
+            Debug.Log("Level 1");
+            SceneManager.LoadScene("Level 1");
         }
     }
 }

@@ -12,6 +12,8 @@ TagManager:
   - Box
   - PowerUp
   - Child
+  - Wall
+  - Coin
   layers:
   - Default
   - TransparentFX

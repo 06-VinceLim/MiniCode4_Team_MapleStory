@@ -49,57 +49,38 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //This code is for running
         if (Input.GetKey(KeyCode.W))
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            StartRun();
+            transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            PlayerAnim.SetBool("IsRun", true);
         }
-        else if (Input.GetKeyUp(KeyCode.W)) //Go up
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D)) //Go up
         {
             PlayerAnim.SetBool("IsRun", false);
             PlayerAnim.SetFloat("StartRun", 0);
         }
 
-        else if (Input.GetKey(KeyCode.S)) // Go back
+        if (Input.GetKey(KeyCode.S)) // Go back
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            StartRun();
+            transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            PlayerAnim.SetBool("IsRun", true);
         }
 
-        else if (Input.GetKeyUp(KeyCode.S)) //Go Back
-        {
-            PlayerAnim.SetBool("IsRun", false);
-            PlayerAnim.SetFloat("StartRun", 0);
-        }
-
-        else if (Input.GetKey(KeyCode.A)) // Go Left
+        if (Input.GetKey(KeyCode.A)) // Go Left
         {
             transform.rotation = Quaternion.Euler(0, -90, 0);
-            StartRun();
+            transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            PlayerAnim.SetBool("IsRun", true);
         }
-
-
-        else if (Input.GetKeyUp(KeyCode.A)) //Go Left
-        {
-            PlayerAnim.SetBool("IsRun", false);
-            PlayerAnim.SetFloat("StartRun", 0);
-        }
-
-        else if (Input.GetKey(KeyCode.D)) // Go Right
+        if (Input.GetKey(KeyCode.D)) // Go Right
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
-            StartRun();
+            transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            PlayerAnim.SetBool("IsRun", true);
         }
-
-
-        else if (Input.GetKeyUp(KeyCode.D)) //Go Right
-        {
-            PlayerAnim.SetBool("IsRun", false);
-            PlayerAnim.SetFloat("StartRun", 0);
-        }
-
         if (Input.GetKeyDown(KeyCode.Space) && IsOnPlane) // This code is for Jumping
         {
             PlayerRb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
@@ -173,6 +154,19 @@ public class Player_Controller : MonoBehaviour
             Destroy(collision.gameObject);
             // gameObject -> Player gameObject
             // collision.gameObject -> the other gameobject
+        }
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            Destroy(collision.gameObject);
+            GameManagerScript.instance.CoinCollected++;
+            if (GameManagerScript.instance.CoinCollected < 30)
+            {
+                GameManagerScript.instance.SpawnCaps();
+            }
+            else if (GameManagerScript.instance.CoinCollected >= 30)
+            {
+                Destroy(GameObject.FindGameObjectWithTag("Wall"));
+            }
         }
 
         if (PowerUpCount == TotalPowerUp)
