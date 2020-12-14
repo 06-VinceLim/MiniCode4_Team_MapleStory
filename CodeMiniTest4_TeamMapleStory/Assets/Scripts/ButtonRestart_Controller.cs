@@ -19,11 +19,19 @@ public class ButtonRestart_Controller : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Level 0");
     }
 
     public void GotoMenu()
     {
         SceneManager.LoadScene("StartScene");
+    }
+    public void Instruction()
+    {
+        SceneManager.LoadScene("InstructionScene");
+    }
+    public void Credit()
+    {
+        SceneManager.LoadScene("CreditScene");
     }
 }
